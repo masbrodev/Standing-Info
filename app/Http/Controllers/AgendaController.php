@@ -14,7 +14,8 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        return view('pages.agenda');
+        $data['agenda'] = Agenda::get();
+        return view('pages.agenda', $data);
     }
 
     /**
@@ -35,7 +36,17 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'nama' => $request->nama,
+            'tempat' => $request->tempat,
+            'waktu' => $request->tgl . ' ' . $request->jam,
+        ];
+        $save = Agenda::create($data);
+        if ($save) {
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -55,9 +66,14 @@ class AgendaController extends Controller
      * @param  \App\Agenda  $agenda
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agenda $agenda)
+    public function edit($agenda)
     {
-        //
+        $delete = Agenda::where('id', $agenda)->delete();
+        if ($delete) {
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -67,9 +83,19 @@ class AgendaController extends Controller
      * @param  \App\Agenda  $agenda
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agenda $agenda)
+    public function update(Request $request, $agenda)
     {
-        //
+        $data = [
+            'nama' => $request->nama,
+            'tempat' => $request->tempat,
+            'waktu' => $request->tgl . ' ' . $request->jam,
+        ];
+        $save = Agenda::where('id', $agenda)->update($data);
+        if ($save) {
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
