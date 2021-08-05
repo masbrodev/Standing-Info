@@ -131,3 +131,6 @@
 @endforeach
 
 @endsection
+@section('adminlte_js')
+
+@endsection

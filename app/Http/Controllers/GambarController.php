@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gambar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class GambarController extends Controller
@@ -14,7 +15,8 @@ class GambarController extends Controller
      */
     public function index()
     {
-        return view('pages.gambar');
+        $data['gambar'] = Gambar::get();
+        return view('pages.gambar', $data);
     }
 
     /**
@@ -35,7 +37,18 @@ class GambarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $berkas = $request->file('gambar');
+
+        $name = uniqid() . '_IMG_' . trim($berkas->getClientOriginalName());
+        $berkas->move('berkas/gambar/', $name);
+
+        Gambar::create([
+            'nama' => $request->nama,
+            'lokasi' => 'berkas/gambar/' . $name,
+            'kondisi' => 'T'
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -55,9 +68,18 @@ class GambarController extends Controller
      * @param  \App\Gambar  $gambar
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gambar $gambar)
+    public function edit($gambar)
     {
-        //
+        $data = Gambar::where('id', $gambar)->first();
+        $path = public_path($data->lokasi);
+
+        if (file_exists($path)) {
+            $data->delete();
+            unlink($path);
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
