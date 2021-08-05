@@ -14,7 +14,8 @@ class VidioController extends Controller
      */
     public function index()
     {
-        return view('pages.vidio');
+        $data['vidio'] = Vidio::where('id', 1)->first();
+        return view('pages.vidio', $data);
     }
 
     /**
@@ -67,9 +68,17 @@ class VidioController extends Controller
      * @param  \App\Vidio  $vidio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vidio $vidio)
+    public function update(Request $request, $vidio)
     {
-        //
+        $data = [
+            'link' => $request->link,
+        ];
+        $save = Vidio::where('id', $vidio)->update($data);
+        if ($save) {
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
