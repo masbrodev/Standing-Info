@@ -14,17 +14,12 @@ use phpDocumentor\Reflection\Types\Resource_;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-     Toastr::success('Messages in here', 'Title', ["positionClass" => "toast-top-center"]);
-    return view('welcome');
-});
-
 Route::get('/a', function () {
      Toastr::success('Messages in here', 'Title', ["positionClass" => "toast-top-center"]);
     return view('pages.produk');
 });
 
+Route::get('/', 'HomeController@welcome');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

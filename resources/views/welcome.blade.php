@@ -1,104 +1,303 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 
-        <title>Laravel</title>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/custom/calendar.css') }}">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://adminlte.io/themes/dev/AdminLTE/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+</head>
 
-            .full-height {
-                height: 100vh;
-            }
+<body>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach($gambar as $g)
+            <li data-target="#carouselExampleCaptions" data-slide-to="{{$loop->iteration - 1 }}" class=" @if($loop->iteration == 0) active @endif"></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach($gambar as $g)
+            <div class="carousel-item @if($loop->iteration == 1) active @endif">
+                <img src="{{ $g->lokasi }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{ $g->nama }}</h5>
+                    <p>Some representative placeholder content for the first slide.</p>
                 </div>
-            @endif
+            </div>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Agenda {{ Carbon\Carbon::now()->isoFormat('D M Y') }} ||</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHuba</a>
+                <div class="card-body p-0">
+                    <ul class="products-list product-list-in-card pl-2 pr-2">
+                        @foreach($agenda as $d)
+                        <li class="item">
+                            <div class="product-img">
+                                <a href="#"><img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png" alt="Product Image" class="img-size-50"></a>
+                            </div>
+                            <div class="product-info">
+                                <a href="#" class="product-title">{{ $d->tempat }}
+                                    <span class="badge badge-success float-right">{{ $d->waktu }}</span></a>
+                                @if( Carbon\Carbon::now()->isoFormat('D M Y') ==  Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                <span class="badge badge-danger float-right">Hari Ini</span></a>
+                                @elseif (Carbon\Carbon::tomorrow()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                <span class="badge badge-primary float-right">Besok</span></a>
+                                @endif
+                                <span class="product-description">
+                                    {{ $d->nama }}
+                                </span>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
-        <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-        {!! Toastr::message() !!}
-    </body>
+        <div class="col-md-6">
+            <div class="card bg-gradient-success">
+                <div class="card-header border-0">
+
+                    <h3 class="card-title">
+                        <i class="far fa-calendar-alt"></i>
+                        Calendar
+                    </h3>
+                    <!-- tools card -->
+                    <div class="card-tools">
+                        <!-- button with a dropdown -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-bars"></i></button>
+                            <div class="dropdown-menu float-right" role="menu">
+                                <a href="#" class="dropdown-item">Add new event</a>
+                                <a href="#" class="dropdown-item">Clear events</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">View calendar</a>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <!-- /. tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <!--The calendar -->
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/custom/calendar.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+
+    <!-- <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/moment/moment.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/dist/js/pages/dashboard.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/sparklines/sparkline.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/dist/js/adminlte.js"></script>
+    <script src="https://adminlte.io/themes/dev/AdminLTE/dist/js/demo.js"></script> -->
+
+    <script>
+        $(document).ready(function() {
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            console.log(d);
+
+            /*  className colors
+            
+            className: default(transparent), important(red), chill(pink), success(green), info(blue)
+            
+            */
+
+
+            /* initialize the external events
+            -----------------------------------------------------------------*/
+
+            $('#external-events div.external-event').each(function() {
+
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true, // will cause the event to go back to its
+                    revertDuration: 0 //  original position after the drag
+                });
+
+            });
+
+
+            /* initialize the calendar
+            -----------------------------------------------------------------*/
+
+            var calendar = $('#calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: 'agendaDay,agendaWeek,month',
+                    right: 'prev,next today'
+                },
+                editable: true,
+                firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+                selectable: true,
+                defaultView: 'month',
+
+                axisFormat: 'h:mm',
+                columnFormat: {
+                    month: 'ddd', // Mon
+                    week: 'ddd d', // Mon 7
+                    day: 'dddd M/d', // Monday 9/7
+                    agendaDay: 'dddd d'
+                },
+                titleFormat: {
+                    month: 'MMMM yyyy', // September 2009
+                    week: "MMMM yyyy", // September 2009
+                    day: 'MMMM yyyy' // Tuesday, Sep 8, 2009
+                },
+                allDaySlot: false,
+                selectHelper: true,
+                select: function(start, end, allDay) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        calendar.fullCalendar('renderEvent', {
+                                title: title,
+                                start: start,
+                                end: end,
+                                allDay: allDay
+                            },
+                            true // make the event "stick"
+                        );
+                    }
+                    calendar.fullCalendar('unselect');
+                },
+                droppable: true, // this allows things to be dropped onto the calendar !!!
+                drop: function(date, allDay) { // this function is called when something is dropped
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = allDay;
+
+                    // render the event on the calendar
+                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+
+                },
+
+                events: [
+                    // {
+                    //     title: 'All Day Event',
+                    //     start: new Date(y, m, 1)
+                    // },
+                    // {
+                    //     title: 'Rapat Meet',
+                    //     start: new Date(y, m, 3)
+                    // },
+                    // {
+                    //     id: 999,
+                    //     title: 'Repeating Event',
+                    //     start: new Date(y, m, d + 4, 16, 0),
+                    //     allDay: false,
+                    //     className: 'info'
+                    // },
+                    // {
+                    //     title: 'Meeting',
+                    //     start: new Date(y, m, d, 10, 30),
+                    //     allDay: false,
+                    //     className: 'important'
+                    // },
+                    // {
+                    //     title: 'Lunch',
+                    //     start: new Date(y, m, d, 12, 9),
+                    //     end: new Date(y, m, d, 14, 0),
+                    //     allDay: false,
+                    //     className: 'important'
+                    // },
+                    // {
+                    //     title: 'Birthday Party',
+                    //     start: new Date(y, m, d + 1, 19, 0),
+                    //     end: new Date(y, m, d + 1, 22, 30),
+                    //     allDay: false,
+                    // },
+                    // {
+                    //     title: 'Click for Google',
+                    //     start: new Date(y, m, 28),
+                    //     end: new Date(y, m, 29),
+                    //     url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
+                    //     className: 'success'
+                    // }
+                ],
+            });
+
+
+        });
+    </script>
+</body>
+
 </html>
