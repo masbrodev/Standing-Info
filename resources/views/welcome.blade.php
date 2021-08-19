@@ -17,7 +17,11 @@
 </head>
 
 <body>
-
+    <div class="row">
+        <div class="col-md-12">
+            <iframe width="925" height="315" src="https://www.youtube.com/embed/{{Str::of($vidio->link)->afterLast('?v=')}}?rel=0&amp;autoplay=1&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @foreach($gambar as $g)
@@ -65,12 +69,16 @@
                                 <a href="#"><img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png" alt="Product Image" class="img-size-50"></a>
                             </div>
                             <div class="product-info">
-                                <a href="#" class="product-title">{{ $d->tempat }}
-                                    <span class="badge badge-success float-right">{{ $d->waktu }}</span></a>
-                                @if( Carbon\Carbon::now()->isoFormat('D M Y') ==  Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                <a href="#" class="product-title">{{ $d->waktu }}
+                                    <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:m') }} WIB</span></a>
+                                    <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
+                                @if( Carbon\Carbon::now()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
                                 <span class="badge badge-danger float-right">Hari Ini</span></a>
                                 @elseif (Carbon\Carbon::tomorrow()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
                                 <span class="badge badge-primary float-right">Besok</span></a>
+                                @elseif (Carbon\Carbon::today()->isoFormat('D M Y') > Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                <span class="badge badge-secondary float-right">Terlewati</span></a>
+
                                 @endif
                                 <span class="product-description">
                                     {{ $d->nama }}
@@ -120,6 +128,7 @@
                 <!-- /.card-body -->
             </div>
         </div>
+
     </div>
 
 
