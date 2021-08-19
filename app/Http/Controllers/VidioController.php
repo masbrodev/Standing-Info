@@ -12,6 +12,12 @@ class VidioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $data['vidio'] = Vidio::where('id', 1)->first();
