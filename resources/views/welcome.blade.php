@@ -34,7 +34,6 @@
                 <img src="{{ $g->lokasi }}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{ $g->nama }}</h5>
-                    <p>Some representative placeholder content for the first slide.</p>
                 </div>
             </div>
             @endforeach
