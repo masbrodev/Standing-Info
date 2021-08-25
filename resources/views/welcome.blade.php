@@ -10,6 +10,7 @@
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/custom/calendar.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/custom/table.css') }}">
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://adminlte.io/themes/dev/AdminLTE/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
@@ -52,7 +53,7 @@
         <div class="col-md-6">
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Agenda {{ Carbon\Carbon::now()->isoFormat('D M Y') }} ||</h3>
+                    <h3 class="card-title">Agenda</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -61,31 +62,44 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <ul class="products-list product-list-in-card pl-2 pr-2">
-                        @foreach($agenda as $d)
-                        <li class="item">
-                            <div class="product-img">
-                                <a href="#"><img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png" alt="Product Image" class="img-size-50"></a>
-                            </div>
-                            <div class="product-info">
-                                <a href="#" class="product-title">{{ $d->waktu }}
-                                    <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:m') }} WIB</span></a>
-                                    <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
-                                @if( Carbon\Carbon::now()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
-                                <span class="badge badge-danger float-right">Hari Ini</span></a>
-                                @elseif (Carbon\Carbon::tomorrow()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
-                                <span class="badge badge-primary float-right">Besok</span></a>
-                                @elseif (Carbon\Carbon::today()->isoFormat('D M Y') > Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
-                                <span class="badge badge-secondary float-right">Terlewati</span></a>
-
-                                @endif
-                                <span class="product-description">
-                                    {{ $d->nama }}
-                                </span>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
+                    <table class="table table-hover display table-sm agenda products-list product-list-in-card pl-2 pr-2" id="agenda">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($agenda as $d)
+                            <tr>
+                                <td>
+                                    <div class="product-img">
+                                        <a href="#"><img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png" alt="Product Image" class="img-size-50"></a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="product-info">
+                                        <a href="#" class="product-title">{{ $d->tempat }}</a>
+                                        @if( Carbon\Carbon::now()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                        <span class="badge badge-danger float-right">Hari Ini</span></a>
+                                        @elseif (Carbon\Carbon::tomorrow()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                        <span class="badge badge-primary float-right">Besok</span></a>
+                                        @elseif (Carbon\Carbon::today()->isoFormat('D M Y') > Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                        <span class="badge badge-secondary float-right">Terlewati</span></a>
+                                        @endif
+                                        <br>
+                                        <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:m') }} WIB</span>
+                                        <br>
+                                        <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
+                                        <span class="product-description">
+                                            {{ $d->nama }}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -99,23 +113,7 @@
                     </h3>
                     <!-- tools card -->
                     <div class="card-tools">
-                        <!-- button with a dropdown -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                                <i class="fas fa-bars"></i></button>
-                            <div class="dropdown-menu float-right" role="menu">
-                                <a href="#" class="dropdown-item">Add new event</a>
-                                <a href="#" class="dropdown-item">Clear events</a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">View calendar</a>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
+
                     </div>
                     <!-- /. tools -->
                 </div>
@@ -136,6 +134,9 @@
     <script src="{{ asset('vendor/custom/calendar.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script src="https://adminlte.io/themes/dev/AdminLTE/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -153,6 +154,13 @@
 
     <script>
         $(document).ready(function() {
+            $("#agenda").dataTable({
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": false,
+                "bAutoWidth": false
+            });
+
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();
