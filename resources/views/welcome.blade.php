@@ -85,7 +85,7 @@
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
                                         <span class="badge badge-primary float-right">Besok</span></a>
                                         @elseif (Carbon\Carbon::today()->isoFormat('D M Y') > Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
-                                        <span class="badge badge-secondary float-right">Terlewati</span></a>
+                                        <span class="badge badge-secondary float-right">Selesai</span></a>
                                         @endif
                                         <br>
                                         <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:m') }} WIB</span>
