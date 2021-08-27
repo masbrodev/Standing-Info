@@ -20,7 +20,7 @@
 <body>
     <div class="row">
         <div class="col-md-12">
-            <iframe width="1325" height="315" src="https://www.youtube.com/embed/{{Str::of($vidio->link)->afterLast('?v=')}}?rel=0&amp;autoplay=1&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+            <iframe width="1055" height="315" src="https://www.youtube.com/embed/{{Str::of($vidio->link)->afterLast('?v=')}}?rel=0&amp;autoplay=1&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -32,7 +32,7 @@
         <div class="carousel-inner">
             @foreach($gambar as $g)
             <div class="carousel-item @if($loop->iteration == 1) active @endif">
-                <img src="{{ $g->lokasi }}" class="d-block w-100" alt="...">
+                <img src="{{ $g->lokasi }}" height="600" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{ $g->nama }}</h5>
                 </div>
@@ -50,10 +50,10 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Agenda</h3>
+                    <h3 class="card-title">Agenda {{Carbon\Carbon::now()->isoFormat('MMDD')}}</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -67,33 +67,41 @@
                             <tr>
                                 <th></th>
                                 <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($agenda as $d)
                             <tr>
                                 <td>
-                                    <div class="product-img">
-                                        <a href="#"><img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png" alt="Product Image" class="img-size-50"></a>
-                                    </div>
+                                    <img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png " width="80" alt="Product Image">
                                 </td>
                                 <td>
-                                    <div class="product-info">
-                                        <a href="#" class="product-title">{{ $d->tempat }}</a>
-                                        @if( Carbon\Carbon::now()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                    {{Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD')}} {{$d->waktu}}
+                                    <a href="#" class="product-title">{{ $d->tempat }}</a>
+
+                                </td>
+                                <td>
+                                    <span class="">
+                                        {{ $d->nama }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        @if( Carbon\Carbon::now()->isoFormat('MMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD'))
                                         <span class="badge badge-danger float-right">Hari Ini</span></a>
-                                        @elseif (Carbon\Carbon::tomorrow()->isoFormat('D M Y') == Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                        @elseif (Carbon\Carbon::tomorrow()->isoFormat('MMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD'))
                                         <span class="badge badge-primary float-right">Besok</span></a>
-                                        @elseif (Carbon\Carbon::today()->isoFormat('D M Y') > Carbon\Carbon::parse($d->waktu)->isoFormat('D M Y'))
+                                        @elseif (Carbon\Carbon::today()->isoFormat('MMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD'))
                                         <span class="badge badge-secondary float-right">Selesai</span></a>
+                                        @else
+                                        <span class="badge badge-warning float-right">Akan Datang</span></a>
                                         @endif
                                         <br>
                                         <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:m') }} WIB</span>
                                         <br>
                                         <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
-                                        <span class="product-description">
-                                            {{ $d->nama }}
-                                        </span>
                                     </div>
                                 </td>
                             </tr>
@@ -103,7 +111,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card bg-gradient-success">
                 <div class="card-header border-0">
 
