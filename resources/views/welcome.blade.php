@@ -78,7 +78,6 @@
                                     <img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png " width="80" alt="Product Image">
                                 </td>
                                 <td>
-                                    {{Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD')}} {{$d->waktu}}
                                     <a href="#" class="product-title">{{ $d->tempat }}</a>
 
                                 </td>
