@@ -53,7 +53,7 @@
         <div class="col-md-12">
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Agenda {{Carbon\Carbon::now()->isoFormat('MMDD')}}</h3>
+                    <h3 class="card-title">Agenda / Rapat</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -88,11 +88,11 @@
                                 </td>
                                 <td>
                                     <div class="">
-                                        @if( Carbon\Carbon::now()->isoFormat('MMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD'))
+                                        @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
                                         <span class="badge badge-danger float-right">Hari Ini</span></a>
-                                        @elseif (Carbon\Carbon::tomorrow()->isoFormat('MMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD'))
+                                        @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
                                         <span class="badge badge-primary float-right">Besok</span></a>
-                                        @elseif (Carbon\Carbon::today()->isoFormat('MMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('MMDD'))
+                                        @elseif (Carbon\Carbon::today()->isoFormat('YMMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
                                         <span class="badge badge-secondary float-right">Selesai</span></a>
                                         @else
                                         <span class="badge badge-warning float-right">Akan Datang</span></a>
@@ -176,9 +176,9 @@
             console.log(d);
 
             /*  className colors
-            
+
             className: default(transparent), important(red), chill(pink), success(green), info(blue)
-            
+
             */
 
 
