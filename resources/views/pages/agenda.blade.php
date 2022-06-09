@@ -132,5 +132,7 @@
 
 @endsection
 @section('adminlte_js')
-
+<script>
+    $("#tiket").dataTable();
+</script>
 @endsection

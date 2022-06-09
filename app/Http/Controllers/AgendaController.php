@@ -17,10 +17,10 @@ class AgendaController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
-        $data['agenda'] = Agenda::get();
+        $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
         return view('pages.agenda', $data);
     }
 
