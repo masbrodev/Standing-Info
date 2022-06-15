@@ -46,7 +46,10 @@ class AgendaController extends Controller
             'nama' => $request->nama,
             'tempat' => $request->tempat,
             'waktu' => $request->tgl . ' ' . $request->jam,
-        ];
+            'dari'=> $request->dari,
+            'keterangan' => $request->keterangan,
+            'sampai' => $request->tgl . ' ' . $request->sampai
+                ];
         $save = Agenda::create($data);
         if ($save) {
             return redirect()->back();

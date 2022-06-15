@@ -58,20 +58,35 @@
             <div class="modal-body">
                 <form action="{{ route('agenda.store')}}" method="post">
                     @csrf
-                    <label>Nama Agenda</label>
+                    <label>Nama Pemohon (Beserta Posisi Jabatan)</label>
+                    <input type="text" class="form-control" name="dari" placeholder="Adam Lewis (Staff Inspektur I)">
+                    <br>
+                    <label>Nama Agenda/Rapat</label>
                     <input type="text" class="form-control" name="nama">
+                    <br>
+                    <label>Kategori</label>
+                    <br>
+                    <select class="form-control" name="keterangan">
+                        <option value="off" selected>Offline</option>
+                        <option value="on">Online</option>
+                        <option value="ofn">Online & Offline</option>
+                    </select>
                     <br>
                     <label>Tempat</label>
                     <input type="text" class="form-control" name="tempat">
                     <br>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <label>Tanggal</label>
                             <input type="date" class="form-control" name="tgl">
                         </div>
-                        <div class="col-sm-6">
-                            <label>Waktu</label>
+                        <div class="col-sm-4">
+                            <label>Jam Rapat</label>
                             <input type="time" class="form-control" name="jam">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Sampai</label>
+                            <input type="time" class="form-control" name="sampai">
                         </div>
                     </div>
             </div>
