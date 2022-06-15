@@ -98,7 +98,7 @@
                                         <span class="badge badge-warning float-right">Akan Datang</span></a>
                                         @endif
                                         <br>
-                                        <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:m') }} WIB</span>
+                                        <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
                                         <br>
                                         <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
                                     </div>
@@ -273,11 +273,18 @@
                 },
 
                 events: [
-                    // {
-                    //     title: 'All Day Event',
-                    //     start: new Date(y, m, 1)
-                    // },
-                    // {
+                    @foreach ($agenda as $j)
+                        {
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }} - {{ $j->nama }}`,
+                            start : new Date(`{{ Carbon\Carbon::parse($j->waktu)->isoFormat('Y,MM,DD') }}`),
+                            allday: false
+                        },
+                    @endforeach
+                    //     {
+                    //         title: 'All Day Event',
+                    //         start: new Date(y, m, 1)
+                    //     },
+                    //     {
                     //     title: 'Rapat Meet',
                     //     start: new Date(y, m, 3)
                     // },
