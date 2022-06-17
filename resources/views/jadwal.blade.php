@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspektorat Jenderal Kementerian Desa</title>
+    <title>Jadwal Rapat Inspektorat Jenderal</title>
 
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/custom/calendar.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/custom/table.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://adminlte.io/themes/dev/AdminLTE/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
@@ -18,39 +19,32 @@
 </head>
 
 <body>
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <iframe width="1055" height="315" src="https://www.youtube.com/embed/{{Str::of($vidio->link)->afterLast('?v=')}}?rel=0&amp;autoplay=1&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div> -->
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @foreach($gambar as $g)
-            <li data-target="#carouselExampleCaptions" data-slide-to="{{$loop->iteration - 1 }}" class=" @if($loop->iteration == 0) active @endif"></li>
-            @endforeach
-        </ol>
-        <div class="carousel-inner">
-            @foreach($gambar as $g)
-            <div class="carousel-item @if($loop->iteration == 1) active @endif">
-                <img src="{{ $g->lokasi }}" height="600" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>{{ $g->nama }}</h5>
-                </div>
-            </div>
-            @endforeach
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
     <div class="row">
-    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="card bg-gradient-danger">
+                <div class="card-header border-0">
+
+                    <h3 class="card-title">
+                        <i class="far fa-calendar"></i>
+                        Kalender Rapat
+                    </h3>
+                    <!-- tools card -->
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-lg btn-outline-light float-center" data-toggle="modal" data-target="#tambah-agenda">AJUKAN AGENDA RAPAT</button>
+
+                    </div>
+                    <!-- /. tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <!--The calendar -->
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+
+        <div class="col-md-12">
             <div class="card card-danger">
                 <div class="card-header">
                     <h3 class="card-title">Tabel Rapat</h3>
@@ -147,37 +141,77 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="card bg-gradient-danger">
-                <div class="card-header border-0">
-
-                    <h3 class="card-title">
-                        <i class="far fa-calendar"></i>
-                        Kalender Rapat
-                    </h3>
-                    <!-- tools card -->
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-lg btn-outline-light float-center" data-toggle="modal" data-target="#tambah-agenda">AJUKAN AGENDA RAPAT</button>
-
-                    </div>
-                    <!-- /. tools -->
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <!--The calendar -->
-                    <div id="calendar"></div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-        </div>
     </div>
 
-    @foreach($agenda as $e)
+<div class="modal fade" id="tambah-agenda">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Agenda</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('agenda.store')}}" method="post">
+                    @csrf
+                    <label>Nama Pemohon (Beserta Posisi Jabatan)</label>
+                    <input required type="text" class="form-control" name="dari" placeholder="Adam Lewis (Staff Inspektur I)">
+                    <br>
+                    <label>Nama Agenda/Rapat</label>
+                    <input required type="text" class="form-control" name="nama">
+                    <input required type="hidden" class="form-control" name="status" value="diajukan">
+                    <br>
+                    <label>Kategori</label>
+                    <br>
+                    <select class="form-control" name="keterangan">
+                        <option value="off" selected>Offline</option>
+                        <option value="on">Online</option>
+                        <option value="ofn">Online & Offline</option>
+                    </select>
+                    <br>
+                    <label>Tempat</label>
+                    <select class="form-control" name="tempat" id="tempat" onchange="othFunc()">
+                        <option value="vip" selected>Ruang Rapat VIP I Inspektorat Jenderal - LT3</option>
+                        <option value="ses">Ruang Rapat Sekretaris Inspektorat jenderal - LT4</option>
+                        <option value="bpk">Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat Jenderal - LT4</option>
+                        <option value="on">Tanpa Ruangan (Rapat Via Online)</option>
+                        <option value="oth">Ruangan Lain (isi sendiri)</option>
+                    </select>
+                    <br>
+                    <input style="display:none" placeholder="Ruang Rapat . . . ." id="oth-text" type="text" class="form-control" name="tempat2">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Tanggal</label>
+                            <input required type="date" class="form-control" name="tgl">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Jam Rapat</label>
+                            <input required type="time" class="form-control" name="jam">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Sampai</label>
+                            <input type="time" class="form-control" name="sampai">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-warning">Simpan</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+
+@foreach($agenda as $e)
 <div class="modal fade" id="edit-agenda{{$e->id}}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{ $e->nama }}</h4>
+                <h4 class="modal-title">Edit Agenda</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -185,14 +219,14 @@
             <div class="modal-body">
                 <form action="{{ route('agenda.update',$e->id) }}" method="POST">
                     @csrf
-                    <label>Nama Pemohon</label>
+                    <label>Nama Pemohon (Beserta Posisi Jabatan)</label>
                     <input disabled type="hidden" class="form-control" value="PUT" name="_method">
                     <input disabled type="hidden" class="form-control" value="{{ csrf_token() }}" name="_token">
                     <input disabled type="text" class="form-control" value="{{ $e->dari }}" name="dari">
                     <br>
-                    <!-- <label>Nama Agenda/Rapat</label>
+                    <label>Nama Agenda/Rapat</label>
                     <input disabled type="text" class="form-control" name="nama" value="{{ $e->nama }}">
-                    <br> -->
+                    <br>
                     <label>Tempat</label>
                     <!-- <select  class="form-control" name="tempat" id="tempat" onchange="othFunc()">
                         <option value="vip" {{ $e->tempat == 'vip' ? 'selected' : '' }} >Ruang Rapat VIP I Inspektorat Jenderal - LT3</option>
@@ -247,6 +281,7 @@
 </div>
 @endforeach
 
+
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/custom/calendar.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -269,6 +304,15 @@
     <script src="https://adminlte.io/themes/dev/AdminLTE/dist/js/demo.js"></script> -->
 
     <script>
+        function othFunc() {
+            var x = document.getElementById("tempat").value;
+            var input = document.getElementById("oth-text");
+            if (x === "oth") {
+                input.style.display = "block";
+            } else {
+                input.style.display = "none";
+            }
+    };
         $(document).ready(function() {
             $("#agenda").dataTable({
                 "bLengthChange": false,
@@ -282,7 +326,8 @@
             var m = date.getMonth();
             var y = date.getFullYear();
 
-            console.log(d);
+            // console.log(d);
+
 
             /*  className colors
 

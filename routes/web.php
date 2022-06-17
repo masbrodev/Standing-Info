@@ -22,7 +22,8 @@ Route::get('/a', function () {
 Route::get('/', 'HomeController@welcome');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'AgendaController@adminjadwal');
+Route::get('/jadwal', 'AgendaController@jadwal');
 Route::resource('agenda','AgendaController');
 Route::resource('gambar','GambarController');
 Route::resource('vidio','VidioController');

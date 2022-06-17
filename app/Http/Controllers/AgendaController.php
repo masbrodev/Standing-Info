@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Agenda;
+use App\Vidio;
+use App\Gambar;
 use Illuminate\Http\Request;
 
 class AgendaController extends Controller
@@ -12,11 +14,6 @@ class AgendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
@@ -44,9 +41,13 @@ class AgendaController extends Controller
     {
         $data = [
             'nama' => $request->nama,
-            'tempat' => $request->tempat,
+            'tempat' => $request->tempat == 'oth' ? $request->tempat2 : $request->tempat,
             'waktu' => $request->tgl . ' ' . $request->jam,
-        ];
+            'dari'=> $request->dari,
+            'keterangan' => $request->keterangan,
+            'status' => $request->status,
+            'sampai' => $request->tgl . ' ' . $request->sampai
+                ];
         $save = Agenda::create($data);
         if ($save) {
             return redirect()->back();
@@ -93,8 +94,12 @@ class AgendaController extends Controller
     {
         $data = [
             'nama' => $request->nama,
-            'tempat' => $request->tempat,
+            'tempat' => $request->tempat == 'oth' ? $request->tempat2 : $request->tempat,
             'waktu' => $request->tgl . ' ' . $request->jam,
+            'dari'=> $request->dari,
+            'keterangan' => $request->keterangan,
+            'status' => $request->status,
+            'sampai' => $request->tgl . ' ' . $request->sampai
         ];
         $save = Agenda::where('id', $agenda)->update($data);
         if ($save) {
@@ -113,5 +118,22 @@ class AgendaController extends Controller
     public function destroy(Agenda $agenda)
     {
         //
+    }
+
+    public function adminjadwal(){
+        $data['vidio'] = Vidio::first();
+        $data['gambar'] = Gambar::get();
+        $data['agenda'] = Agenda::orderBy('waktu', 'DESC')->get();
+        // $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
+        return view('pages.adminjadwal', $data);
+    }
+
+    public function jadwal()
+    {
+        $data['vidio'] = Vidio::first();
+        $data['gambar'] = Gambar::get();
+        $data['agenda'] = Agenda::orderBy('waktu', 'DESC')->get();
+        // $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
+        return view('jadwal', $data);
     }
 }
