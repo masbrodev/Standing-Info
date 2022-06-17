@@ -304,18 +304,18 @@ return [
                 ],
             ],
         ],
-        'Toastr' => [
+        'Select2' => [
             'active' => false,
             'files' => [
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => 'https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css',
+                    'asset' => true,
+                    'location' => 'vendor/select2/css/select2.min.css',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => 'https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/select2/js/select2.min.js',
                 ],
             ],
         ],
