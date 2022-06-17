@@ -401,7 +401,17 @@
                 events: [
                     @foreach ($agenda as $j)
                         {
-                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }} - {{ $j->nama }}`,
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }}
+                                    @if ($j->tempat == 'vip')
+                                    vip1 LT 3
+                                    @elseif ($j->tempat == 'bpk')
+                                    BPK LT 3
+                                    @elseif ($j->tempat == 'ses')
+                                    SES LT 4
+                                    @elseif ($j->tempat == 'on')
+                                    Online
+                                    @endif
+                                    {{ '-'. Illuminate\Support\Str::limit($j->nama,15,'.') }}`,
                             start : new Date(`{{ Carbon\Carbon::parse($j->waktu)->isoFormat('Y,MM,DD') }}`),
                             allday: false,
                         },
