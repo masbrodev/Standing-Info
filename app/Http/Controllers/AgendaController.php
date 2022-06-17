@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Agenda;
+use App\Vidio;
+use App\Gambar;
 use Illuminate\Http\Request;
 
 class AgendaController extends Controller
@@ -39,10 +41,11 @@ class AgendaController extends Controller
     {
         $data = [
             'nama' => $request->nama,
-            'tempat' => $request->tempat,
+            'tempat' => $request->tempat == 'oth' ? $request->tempat2 : $request->tempat,
             'waktu' => $request->tgl . ' ' . $request->jam,
             'dari'=> $request->dari,
             'keterangan' => $request->keterangan,
+            'status' => $request->status,
             'sampai' => $request->tgl . ' ' . $request->sampai
                 ];
         $save = Agenda::create($data);
@@ -91,8 +94,12 @@ class AgendaController extends Controller
     {
         $data = [
             'nama' => $request->nama,
-            'tempat' => $request->tempat,
+            'tempat' => $request->tempat == 'oth' ? $request->tempat2 : $request->tempat,
             'waktu' => $request->tgl . ' ' . $request->jam,
+            'dari'=> $request->dari,
+            'keterangan' => $request->keterangan,
+            'status' => $request->status,
+            'sampai' => $request->tgl . ' ' . $request->sampai
         ];
         $save = Agenda::where('id', $agenda)->update($data);
         if ($save) {
