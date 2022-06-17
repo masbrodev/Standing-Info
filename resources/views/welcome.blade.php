@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inspektorat Jenderal Kementerian Desa</title>
 
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
@@ -18,11 +18,11 @@
 </head>
 
 <body>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <iframe width="1055" height="315" src="https://www.youtube.com/embed/{{Str::of($vidio->link)->afterLast('?v=')}}?rel=0&amp;autoplay=1&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
-    </div>
+    </div> -->
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @foreach($gambar as $g)
@@ -50,10 +50,10 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+    <div class="col-md-12">
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Agenda / Rapat</h3>
+                    <h3 class="card-title">Tabel Rapat</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -73,17 +73,46 @@
                         </thead>
                         <tbody>
                             @foreach($agenda as $d)
-                            <tr>
-                                <td>
-                                    <img src="https://e7.pngegg.com/pngimages/779/654/png-clipart-computer-icons-meeting-convention-meeting-black-conference.png " width="80" alt="Product Image">
+                            <tr data-toggle="modal" data-target="#edit-agenda{{$d->id}}">
+                                <td>@if ($d->tempat == 'vip')
+                                    <img src="logo/vip.jpg" width="80" alt="vip">
+                                    @elseif ($d->tempat == 'bpk')
+                                    <img src="logo/bpk.jpg" width="80" alt="vip">
+                                    @elseif ($d->tempat == 'ses')
+                                    <img src="logo/ses.png" width="80" alt="vip">
+                                    @elseif ($d->tempat == 'on')
+                                    <img src="logo/zoom.png" width="80" alt="vip">
+                                    @else
+                                    <img src="logo.png" width="80" alt="vip">
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="#" class="product-title">{{ $d->tempat }}</a>
+                                    <p href="#" class="product-title">
+                                    @if ($d->tempat == 'vip')
+                                    Ruang Rapat VIP I Inspektorat Jenderal -  Lantai 3
+                                    <hr>
+                                    Gedung Utama Kementerian Desa PDTT
+                                    @elseif ($d->tempat == 'bpk')
+                                    Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat jenderal - Lantai 4
+                                    <hr>
+                                    Gedung Utama Kementerian Desa PDTT
+                                    @elseif ($d->tempat == 'ses')
+                                    Ruang Rapat Sekretaris Inspektorat jenderal - Lantai 4
+                                    <hr>
+                                    Gedung Utama Kementerian Desa PDTT
+                                    @elseif ($d->tempat == 'on')
+                                    Rapat Via Online Tanpa Ruangan
+                                    <hr>
+                                    Via Aplikasi Zoom / Google Meet
+                                    @else
+                                    {{ $d->tempat }}
+                                    @endif
+                                    </p>
 
                                 </td>
                                 <td>
                                     <span class="">
-                                        {{ $d->nama }}
+                                       <b> {{ $d->nama }}</b>
                                     </span>
                                 </td>
                                 <td>
@@ -101,6 +130,14 @@
                                         <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
                                         <br>
                                         <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
+                                        <br>
+                                        @if($d->status == 'diajukan')
+                                        <span class="badge text-danger float-right"><i class="fa fa-clock"></i> {{ $d->status }}</span></a>
+                                        @elseif($d->status == 'disetujui')
+                                        <span class="badge float-right text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span></a>
+                                        @else
+                                        <span class="badge text-danger float-right"><i class="fa fa-ban"></i> {{ $d->status }}</span></a>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -111,15 +148,16 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="card bg-gradient-success">
+            <div class="card bg-gradient-danger">
                 <div class="card-header border-0">
 
                     <h3 class="card-title">
-                        <i class="far fa-calendar-alt"></i>
-                        Calendar
+                        <i class="far fa-calendar"></i>
+                        Kalender Rapat
                     </h3>
                     <!-- tools card -->
                     <div class="card-tools">
+                        <button type="button" class="btn btn-lg btn-outline-light float-center" data-toggle="modal" data-target="#tambah-agenda">AJUKAN AGENDA RAPAT</button>
 
                     </div>
                     <!-- /. tools -->
@@ -132,10 +170,82 @@
                 <!-- /.card-body -->
             </div>
         </div>
-
     </div>
 
+    @foreach($agenda as $e)
+<div class="modal fade" id="edit-agenda{{$e->id}}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ $e->nama }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('agenda.update',$e->id) }}" method="POST">
+                    @csrf
+                    <label>Nama Pemohon</label>
+                    <input disabled type="hidden" class="form-control" value="PUT" name="_method">
+                    <input disabled type="hidden" class="form-control" value="{{ csrf_token() }}" name="_token">
+                    <input disabled type="text" class="form-control" value="{{ $e->dari }}" name="dari">
+                    <br>
+                    <!-- <label>Nama Agenda/Rapat</label>
+                    <input disabled type="text" class="form-control" name="nama" value="{{ $e->nama }}">
+                    <br> -->
+                    <label>Tempat</label>
+                    <!-- <select  class="form-control" name="tempat" id="tempat" onchange="othFunc()">
+                        <option value="vip" {{ $e->tempat == 'vip' ? 'selected' : '' }} >Ruang Rapat VIP I Inspektorat Jenderal - LT3</option>
+                        <option value="ses" {{ $e->tempat == 'ses' ? 'selected' : '' }} >Ruang Rapat Sekretaris Inspektorat jenderal - LT4</option>
+                        <option value="bpk" {{ $e->tempat == 'bpk' ? 'selected' : '' }} >Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat Jenderal - LT4</option>
+                        <option value="on" {{ $e->tempat == 'on' ? 'selected' : '' }} >Tanpa Ruangan (Rapat Via Online)</option>
+                        <option value="oth" {{ $e->tempat == 'oth' ? 'selected' : '' }} >Ruangan Lain (isi sendiri)</option>
+                    </select>
+                    <br> -->
+                    <input disabled placeholder="Ruang Rapat . . . ." value="{{ $e->tempat }}" type="text" class="form-control" name="tempat2">
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Tanggal</label>
+                            <input disabled type="date" class="form-control" value="{{ Str::beforeLast($e->waktu, ' ') }}" name="tgl">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Waktu</label>
+                            <input disabled type="time" class="form-control" value="{{ Str::of($e->waktu)->afterLast(' ') }}" name="jam">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Sampai</label>
+                            <input disabled type="time" class="form-control" name="sampai" value="{{ Str::of($e->sampai)->afterLast(' ') }}">
+                        </div>
+                    </div>
+                    <br>
+                    <label>Kategori</label>
+                    <br>
+                    <select disabled class="form-control" name="keterangan">
+                        <option value="off" {{ $e->keterangan == 'off' ? 'selected' : '' }} >Offline</option>
+                        <option value="on" {{ $e->keterangan == 'on' ? 'selected' : '' }}>Online</option>
+                        <option value="ofn" {{ $e->keterangan == 'ofn' ? 'selected' : '' }}>Online & Offline</option>
+                    </select>
+                    <br>
+                    <label>Status</label>
+                    <select disabled class="form-control" name="status">
+                        <option value="diajukan" {{ $e->status == 'diajukan' ? 'selected' : '' }} >Diajukan</option>
+                        <option value="disetujui" {{ $e->status == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
+                        <option value="ditolak" {{ $e->status == 'ofn' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+                    <br>
+                </div>
+            <!-- <div class="modal-footer justify-content-between">
+                <a href="{{ route('agenda.edit', $e->id) }}" class="btn btn-danger">Hapus</a>
+                <button type="submit" class="btn btn-warning">Update</button>
+            </div> -->
+            </form>
+        </div>
 
+    </div>
+    <!-- /.modal-content -->
+</div>
+@endforeach
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/custom/calendar.js') }}"></script>
@@ -233,20 +343,7 @@
                 },
                 allDaySlot: false,
                 selectHelper: true,
-                select: function(start, end, allDay) {
-                    var title = prompt('Event Title:');
-                    if (title) {
-                        calendar.fullCalendar('renderEvent', {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true // make the event "stick"
-                        );
-                    }
-                    calendar.fullCalendar('unselect');
-                },
+
                 droppable: true, // this allows things to be dropped onto the calendar !!!
                 drop: function(date, allDay) { // this function is called when something is dropped
 
@@ -277,7 +374,7 @@
                         {
                             title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }} - {{ $j->nama }}`,
                             start : new Date(`{{ Carbon\Carbon::parse($j->waktu)->isoFormat('Y,MM,DD') }}`),
-                            allday: false
+                            allday: false,
                         },
                     @endforeach
                     //     {
