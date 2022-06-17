@@ -125,4 +125,13 @@ class AgendaController extends Controller
         // $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
         return view('pages.adminjadwal', $data);
     }
+
+    public function jadwal()
+    {
+        $data['vidio'] = Vidio::first();
+        $data['gambar'] = Gambar::get();
+        $data['agenda'] = Agenda::orderBy('waktu', 'DESC')->get();
+        // $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
+        return view('jadwal', $data);
+    }
 }
