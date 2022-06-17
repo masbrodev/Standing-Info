@@ -61,8 +61,6 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,61 +77,49 @@
                                     @else
                                     <img src="logo.png" width="80" alt="vip">
                                     @endif
-                                </td>
-                                <td>
-                                    <p href="#" class="product-title">
-                                    @if ($d->tempat == 'vip')
-                                    Ruang Rapat VIP I Inspektorat Jenderal -  Lantai 3
-                                    <hr>
-                                    Gedung Utama Kementerian Desa PDTT
-                                    @elseif ($d->tempat == 'bpk')
-                                    Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat jenderal - Lantai 4
-                                    <hr>
-                                    Gedung Utama Kementerian Desa PDTT
-                                    @elseif ($d->tempat == 'ses')
-                                    Ruang Rapat Sekretaris Inspektorat jenderal - Lantai 4
-                                    <hr>
-                                    Gedung Utama Kementerian Desa PDTT
-                                    @elseif ($d->tempat == 'on')
-                                    Rapat Via Online Tanpa Ruangan
-                                    <hr>
-                                    Via Aplikasi Zoom / Google Meet
-                                    @else
-                                    {{ $d->tempat }}
-                                    @endif
-                                    </p>
-
-                                </td>
-                                <td>
-                                    <span class="">
-                                       <b> {{ $d->nama }}</b>
-                                    </span>
-                                </td>
-                                <td>
                                     <div class="">
+                                        <br>
                                         @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-danger float-right">Hari Ini</span></a>
+                                        <span class="badge badge-danger">Hari Ini</span></a>
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-primary float-right">Besok</span></a>
+                                        <span class="badge badge-primary">Besok</span></a>
                                         @elseif (Carbon\Carbon::today()->isoFormat('YMMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-secondary float-right">Selesai</span></a>
+                                        <span class="badge badge-secondary">Selesai</span></a>
                                         @else
-                                        <span class="badge badge-warning float-right">Akan Datang</span></a>
+                                        <span class="badge badge-warning">Akan Datang</span></a>
                                         @endif
                                         <br>
-                                        <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
+                                        <span class="badge badge-success">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
                                         <br>
-                                        <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
+                                        <span class="badge badge-info">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
                                         <br>
                                         @if($d->status == 'diajukan')
-                                        <span class="badge text-danger float-right"><i class="fa fa-clock"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span></a>
                                         @elseif($d->status == 'disetujui')
-                                        <span class="badge float-right text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span></a>
                                         @else
-                                        <span class="badge text-danger float-right"><i class="fa fa-ban"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-danger"><i class="fa fa-ban"></i> {{ $d->status }}</span></a>
                                         @endif
                                     </div>
                                 </td>
+                                <td>
+                                <p href="#" class="product-title">
+                                    @if ($d->tempat == 'vip')
+                                    Ruang Rapat VIP I Inspektorat Jenderal -  Lantai 3
+                                    @elseif ($d->tempat == 'bpk')
+                                    Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat jenderal - Lantai 4
+                                    @elseif ($d->tempat == 'ses')
+                                    Ruang Rapat Sekretaris Inspektorat jenderal - Lantai 4
+                                    @elseif ($d->tempat == 'on')
+                                    Rapat Via Online Tanpa Ruangan
+                                    @else
+                                    {{ $d->tempat }}
+                                    @endif
+                                    <hr>
+                                    {{ $d->nama }}
+                                    </p>
+                                </td>
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -365,8 +351,7 @@
             var calendar = $('#calendar').fullCalendar({
                 header: {
                     left: 'title',
-                    center: 'agendaDay,agendaWeek,month',
-                    right: 'prev,next today'
+                    right: 'prev,next'
                 },
                 editable: true,
                 firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system

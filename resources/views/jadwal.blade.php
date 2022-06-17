@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -44,22 +44,15 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card card-danger">
                 <div class="card-header">
                     <h3 class="card-title">Tabel Rapat</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                    </div>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover display table-sm agenda products-list product-list-in-card pl-2 pr-2" id="agenda">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -78,8 +71,8 @@
                                     @else
                                     <img src="logo.png" width="80" alt="vip">
                                     @endif
-<br>
                                     <div class="">
+                                        <br>
                                         @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
                                         <span class="badge badge-danger">Hari Ini</span></a>
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
@@ -107,31 +100,25 @@
                                     <p href="#" class="product-title">
                                     @if ($d->tempat == 'vip')
                                     Ruang Rapat VIP I Inspektorat Jenderal -  Lantai 3
-                                    <hr>
-                                    Gedung Utama Kementerian Desa PDTT
                                     @elseif ($d->tempat == 'bpk')
                                     Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat jenderal - Lantai 4
-                                    <hr>
-                                    Gedung Utama Kementerian Desa PDTT
                                     @elseif ($d->tempat == 'ses')
                                     Ruang Rapat Sekretaris Inspektorat jenderal - Lantai 4
-                                    <hr>
-                                    Gedung Utama Kementerian Desa PDTT
                                     @elseif ($d->tempat == 'on')
                                     Rapat Via Online Tanpa Ruangan
-                                    <hr>
-                                    Via Aplikasi Zoom / Google Meet
                                     @else
                                     {{ $d->tempat }}
                                     @endif
+                                    <hr>
+                                    {{ $d->nama }}
                                     </p>
 
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <span class="">
                                        <b> {{ $d->nama }}</b>
                                     </span>
-                                </td>
+                                </td> -->
                             </tr>
                             @endforeach
                         </tbody>
@@ -364,9 +351,10 @@
             var calendar = $('#calendar').fullCalendar({
                 header: {
                     left: 'title',
+                    right: 'prev,next'
                 },
                 editable: true,
-                firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+                firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
                 selectable: true,
                 defaultView: 'month',
 
