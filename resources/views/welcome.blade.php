@@ -367,8 +367,7 @@
             events: [
                 @foreach ($agenda as $j)
                     {
-                            title : `{{ $j->status == 'diajukan' ? 'x' : '' }}
-                                {{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:MM') }}
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:MM') }}{{ $j->status == 'diajukan' ? '✗' : '✔' }}
                                 @if ($j->tempat == 'vip')
                                 vip1 LT 3
                                 @elseif ($j->tempat == 'bpk')
