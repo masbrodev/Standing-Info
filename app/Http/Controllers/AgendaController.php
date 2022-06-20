@@ -121,7 +121,6 @@ class AgendaController extends Controller
     }
 
     public function adminjadwal(){
-        $data['vidio'] = Vidio::first();
         $data['gambar'] = Gambar::get();
         $data['agenda'] = Agenda::orderBy('waktu', 'DESC')->get();
         // $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
@@ -130,10 +129,13 @@ class AgendaController extends Controller
 
     public function jadwal()
     {
-        $data['vidio'] = Vidio::first();
-        $data['gambar'] = Gambar::get();
-        $data['agenda'] = Agenda::orderBy('waktu', 'DESC')->get();
-        // $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
+        // $data['agenda'] = Agenda::whereDate('waktu', Carbon::now())
+        //                         ->orWhereDate('waktu', Carbon::tomorrow())
+        //                         ->get();
+        // $data['agenda'] = Agenda::where('waktu', '>=', Carbon::now())->get();
+        $data['agenda'] = Agenda::get();
+
+        // return $data['agenda'];
         return view('jadwal', $data);
     }
 }
