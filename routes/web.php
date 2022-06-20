@@ -19,7 +19,8 @@ Route::get('/a', function () {
     return view('pages.produk');
 });
 
-Route::get('/', 'HomeController@welcome');
+Route::get('/', 'AgendaController@jadwal');
+Route::get('/jadwal', 'HomeController@welcome');
 Route::get('/home', function(){
     return redirect('gambar');
 });
@@ -27,7 +28,6 @@ Route::get('/home', function(){
 Auth::routes();
 
 Route::get('/admin', 'AgendaController@adminjadwal');
-Route::get('/jadwal', 'AgendaController@jadwal');
 Route::resource('agenda','AgendaController');
 Route::resource('gambar','GambarController');
 Route::resource('vidio','VidioController');
