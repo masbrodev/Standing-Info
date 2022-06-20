@@ -116,27 +116,28 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="">
+                                <div class="">
+                                        <br>
                                         @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-danger float-right">Hari Ini</span></a>
+                                        <span hidden>A</span> <span class="badge badge-danger">Hari Ini</span>
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-primary float-right">Besok</span></a>
+                                        <span hidden>B</span> <span class="badge badge-primary">Besok</span>
                                         @elseif (Carbon\Carbon::today()->isoFormat('YMMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-secondary float-right">Selesai</span></a>
+                                        <span hidden>D</span> <span class="badge badge-secondary">Selesai</span>
                                         @else
-                                        <span class="badge badge-warning float-right">Akan Datang</span></a>
+                                        <span hidden>C</span> <span class="badge badge-warning">Akan Datang</span>
                                         @endif
                                         <br>
-                                        <span class="badge badge-success float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
+                                        <span class="badge badge-success">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
                                         <br>
-                                        <span class="badge badge-info float-right">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
+                                        <span class="badge badge-info">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span>
                                         <br>
                                         @if($d->status == 'diajukan')
-                                        <span class="badge text-danger float-right"><i class="fa fa-clock"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span>
                                         @elseif($d->status == 'disetujui')
-                                        <span class="badge float-right text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span>
                                         @else
-                                        <span class="badge text-danger float-right"><i class="fa fa-ban"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-danger"><i class="fa fa-ban"></i> {{ $d->status }}</span>
                                         @endif
                                     </div>
                                 </td>
@@ -271,6 +272,7 @@
     <script>
         $(document).ready(function() {
             $("#agenda").dataTable({
+                "order": [[3, 'asc']],
                 "bLengthChange": false,
                 "bFilter": true,
                 "bInfo": false,
@@ -296,21 +298,21 @@
 
             $('#external-events div.external-event').each(function() {
 
-                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-                // it doesn't need to have a start or end
-                var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
-                };
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            };
 
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject);
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
 
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 999,
-                    revert: true, // will cause the event to go back to its
-                    revertDuration: 0 //  original position after the drag
-                });
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999,
+                revert: true, // will cause the event to go back to its
+                revertDuration: 0 //  original position after the drag
+            });
 
             });
 
@@ -319,106 +321,115 @@
             -----------------------------------------------------------------*/
 
             var calendar = $('#calendar').fullCalendar({
-                header: {
-                    left: 'title',
-                    center: 'agendaDay,agendaWeek,month',
-                    right: 'prev,next today'
-                },
-                editable: true,
-                firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
-                selectable: true,
-                defaultView: 'month',
+            header: {
+                left: 'title',
+                right: 'prev,next'
+            },
+            editable: true,
+            firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+            selectable: true,
+            defaultView: 'month',
 
-                axisFormat: 'h:mm',
-                columnFormat: {
-                    month: 'ddd', // Mon
-                    week: 'ddd d', // Mon 7
-                    day: 'dddd M/d', // Monday 9/7
-                    agendaDay: 'dddd d'
-                },
-                titleFormat: {
-                    month: 'MMMM yyyy', // September 2009
-                    week: "MMMM yyyy", // September 2009
-                    day: 'MMMM yyyy' // Tuesday, Sep 8, 2009
-                },
-                allDaySlot: false,
-                selectHelper: true,
+            axisFormat: 'h:mm',
+            columnFormat: {
+                month: 'ddd', // Mon
+                week: 'ddd d', // Mon 7
+                day: 'dddd M/d', // Monday 9/7
+                agendaDay: 'dddd d'
+            },
+            titleFormat: {
+                month: 'MMMM yyyy', // September 2009
+                week: "MMMM yyyy", // September 2009
+                day: 'MMMM yyyy' // Tuesday, Sep 8, 2009
+            },
+            allDaySlot: false,
+            selectHelper: true,
 
-                droppable: true, // this allows things to be dropped onto the calendar !!!
-                drop: function(date, allDay) { // this function is called when something is dropped
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            drop: function(date, allDay) { // this function is called when something is dropped
 
-                    // retrieve the dropped element's stored Event Object
-                    var originalEventObject = $(this).data('eventObject');
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
 
-                    // we need to copy it, so that multiple events don't have a reference to the same object
-                    var copiedEventObject = $.extend({}, originalEventObject);
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
 
-                    // assign it the date that was reported
-                    copiedEventObject.start = date;
-                    copiedEventObject.allDay = allDay;
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
 
-                    // render the event on the calendar
-                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
 
-                },
+            },
 
-                events: [
-                    @foreach ($agenda as $j)
-                        {
-                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }} - {{ $j->nama }}`,
-                            start : new Date(`{{ Carbon\Carbon::parse($j->waktu)->isoFormat('Y,MM,DD') }}`),
-                            allday: false,
-                        },
-                    @endforeach
-                    //     {
-                    //         title: 'All Day Event',
-                    //         start: new Date(y, m, 1)
-                    //     },
-                    //     {
-                    //     title: 'Rapat Meet',
-                    //     start: new Date(y, m, 3)
-                    // },
-                    // {
-                    //     id: 999,
-                    //     title: 'Repeating Event',
-                    //     start: new Date(y, m, d + 4, 16, 0),
-                    //     allDay: false,
-                    //     className: 'info'
-                    // },
-                    // {
-                    //     title: 'Meeting',
-                    //     start: new Date(y, m, d, 10, 30),
-                    //     allDay: false,
-                    //     className: 'important'
-                    // },
-                    // {
-                    //     title: 'Lunch',
-                    //     start: new Date(y, m, d, 12, 9),
-                    //     end: new Date(y, m, d, 14, 0),
-                    //     allDay: false,
-                    //     className: 'important'
-                    // },
-                    // {
-                    //     title: 'Birthday Party',
-                    //     start: new Date(y, m, d + 1, 19, 0),
-                    //     end: new Date(y, m, d + 1, 22, 30),
-                    //     allDay: false,
-                    // },
-                    // {
-                    //     title: 'Click for Google',
-                    //     start: new Date(y, m, 28),
-                    //     end: new Date(y, m, 29),
-                    //     url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
-                    //     className: 'success'
-                    // }
-                ],
+            events: [
+                @foreach ($agenda as $j)
+                    {
+                        title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }}
+                                @if ($j->tempat == 'vip')
+                                vip1 LT 3
+                                @elseif ($j->tempat == 'bpk')
+                                BPK LT 3
+                                @elseif ($j->tempat == 'ses')
+                                SES LT 4
+                                @elseif ($j->tempat == 'on')
+                                Online
+                                @endif
+                                {{ '-'. Illuminate\Support\Str::limit($j->nama,15,'.') }}`,
+                        start : new Date(`{{ Carbon\Carbon::parse($j->waktu)->isoFormat('Y,MM,DD') }}`),
+                        allday: false,
+                    },
+                @endforeach
+                //     {
+                //         title: 'All Day Event',
+                //         start: new Date(y, m, 1)
+                //     },
+                //     {
+                //     title: 'Rapat Meet',
+                //     start: new Date(y, m, 3)
+                // },
+                // {
+                //     id: 999,
+                //     title: 'Repeating Event',
+                //     start: new Date(y, m, d + 4, 16, 0),
+                //     allDay: false,
+                //     className: 'info'
+                // },
+                // {
+                //     title: 'Meeting',
+                //     start: new Date(y, m, d, 10, 30),
+                //     allDay: false,
+                //     className: 'important'
+                // },
+                // {
+                //     title: 'Lunch',
+                //     start: new Date(y, m, d, 12, 9),
+                //     end: new Date(y, m, d, 14, 0),
+                //     allDay: false,
+                //     className: 'important'
+                // },
+                // {
+                //     title: 'Birthday Party',
+                //     start: new Date(y, m, d + 1, 19, 0),
+                //     end: new Date(y, m, d + 1, 22, 30),
+                //     allDay: false,
+                // },
+                // {
+                //     title: 'Click for Google',
+                //     start: new Date(y, m, 28),
+                //     end: new Date(y, m, 29),
+                //     url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
+                //     className: 'success'
+                // }
+            ],
             });
 
 
