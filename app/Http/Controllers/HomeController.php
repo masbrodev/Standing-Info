@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $data['vidio'] = Vidio::first();
         $data['gambar'] = Gambar::get();
-        $data['agenda'] = Agenda::orderBy('waktu', 'DESC')->get();
+        $data['agenda'] = Agenda::get();
 
         return view('welcome', $data);
         // return $data;
