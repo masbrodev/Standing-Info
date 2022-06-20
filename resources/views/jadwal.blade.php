@@ -74,25 +74,25 @@
                                     <div class="">
                                         <br>
                                         @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-danger">Hari Ini</span></a>
+                                        <span hidden>A</span> <span class="badge badge-danger">Hari Ini</span>
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-primary">Besok</span></a>
+                                        <span hidden>B</span> <span class="badge badge-primary">Besok</span>
                                         @elseif (Carbon\Carbon::today()->isoFormat('YMMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span class="badge badge-secondary">Selesai</span></a>
+                                        <span hidden>D</span> <span class="badge badge-secondary">Selesai</span>
                                         @else
-                                        <span class="badge badge-warning">Akan Datang</span></a>
+                                        <span hidden>C</span> <span class="badge badge-warning">Akan Datang</span>
                                         @endif
                                         <br>
                                         <span class="badge badge-success">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
                                         <br>
-                                        <span class="badge badge-info">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span></a>
+                                        <span class="badge badge-info">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span>
                                         <br>
                                         @if($d->status == 'diajukan')
-                                        <span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span>
                                         @elseif($d->status == 'disetujui')
-                                        <span class="badge text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span>
                                         @else
-                                        <span class="badge text-danger"><i class="fa fa-ban"></i> {{ $d->status }}</span></a>
+                                        <span class="badge text-danger"><i class="fa fa-ban"></i> {{ $d->status }}</span>
                                         @endif
                                     </div>
                                 </td>
