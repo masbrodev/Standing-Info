@@ -20,6 +20,10 @@ Route::get('/a', function () {
 });
 
 Route::get('/', 'HomeController@welcome');
+Route::get('/home', function(){
+    return redirect('gambar');
+});
+
 Auth::routes();
 
 Route::get('/admin', 'AgendaController@adminjadwal');

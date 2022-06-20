@@ -112,7 +112,7 @@
                                 </td>
                                 <td>
                                     <span class="">
-                                       <b> {{ $d->nama }}</b>
+                                       <b> - {{ $d->nama }}</b>
                                     </span>
                                 </td>
                                 <td>
@@ -133,7 +133,7 @@
                                         <span class="badge badge-info">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span>
                                         <br>
                                         @if($d->status == 'diajukan')
-                                        <span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span>
+                                        <span hidden>qq</span><span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span>
                                         @elseif($d->status == 'disetujui')
                                         <span class="badge text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span>
                                         @else
@@ -156,12 +156,6 @@
                         <i class="far fa-calendar"></i>
                         Kalender Rapat
                     </h3>
-                    <!-- tools card -->
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-lg btn-outline-light float-center" data-toggle="modal" data-target="#tambah-agenda">AJUKAN AGENDA RAPAT</button>
-
-                    </div>
-                    <!-- /. tools -->
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -373,7 +367,7 @@
             events: [
                 @foreach ($agenda as $j)
                     {
-                        title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }}
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:MM') }}
                                 @if ($j->tempat == 'vip')
                                 vip1 LT 3
                                 @elseif ($j->tempat == 'bpk')

@@ -88,7 +88,7 @@
                                         <span class="badge badge-info">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('D MMMM Y') }}</span>
                                         <br>
                                         @if($d->status == 'diajukan')
-                                        <span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span>
+                                        <span hidden>qq</span><span class="badge text-danger"><i class="fa fa-clock"></i> {{ $d->status }}</span>
                                         @elseif($d->status == 'disetujui')
                                         <span class="badge text-primary"><i class="fa fa-check text-primary"></i> {{ $d->status }}</span>
                                         @else
@@ -401,7 +401,7 @@
                 events: [
                     @foreach ($agenda as $j)
                         {
-                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') }}
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:MM') }}
                                     @if ($j->tempat == 'vip')
                                     vip1 LT 3
                                     @elseif ($j->tempat == 'bpk')
