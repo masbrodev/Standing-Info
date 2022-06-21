@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="1200">
     <title>Inspektorat Jenderal Kementerian Desa</title>
 
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
@@ -93,7 +94,7 @@
                                     <hr>
                                     Gedung Utama Kementerian Desa PDTT
                                     @elseif ($d->tempat == 'bpk')
-                                    Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat jenderal - Lantai 4
+                                    Ruang Rapat Badan Pemeriksa Keuangan (BPK) Inspektorat jenderal - Lantai 4
                                     <hr>
                                     Gedung Utama Kementerian Desa PDTT
                                     @elseif ($d->tempat == 'ses')
@@ -192,7 +193,7 @@
                     <!-- <select  class="form-control" name="tempat" id="tempat" onchange="othFunc()">
                         <option value="vip" {{ $e->tempat == 'vip' ? 'selected' : '' }} >Ruang Rapat VIP I Inspektorat Jenderal - LT3</option>
                         <option value="ses" {{ $e->tempat == 'ses' ? 'selected' : '' }} >Ruang Rapat Sekretaris Inspektorat jenderal - LT4</option>
-                        <option value="bpk" {{ $e->tempat == 'bpk' ? 'selected' : '' }} >Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat Jenderal - LT4</option>
+                        <option value="bpk" {{ $e->tempat == 'bpk' ? 'selected' : '' }} >Ruang Rapat Badan Pemeriksa Keuangan (BPK) Inspektorat Jenderal - LT4</option>
                         <option value="on" {{ $e->tempat == 'on' ? 'selected' : '' }} >Tanpa Ruangan (Rapat Via Online)</option>
                         <option value="oth" {{ $e->tempat == 'oth' ? 'selected' : '' }} >Ruangan Lain (isi sendiri)</option>
                     </select>

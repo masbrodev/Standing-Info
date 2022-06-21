@@ -107,7 +107,7 @@
                                     @if ($d->tempat == 'vip')
                                     Ruang Rapat VIP I Inspektorat Jenderal -  Lantai 3
                                     @elseif ($d->tempat == 'bpk')
-                                    Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat jenderal - Lantai 4
+                                    Ruang Rapat Badan Pemeriksa Keuangan (BPK) Inspektorat jenderal - Lantai 4
                                     @elseif ($d->tempat == 'ses')
                                     Ruang Rapat Sekretaris Inspektorat jenderal - Lantai 4
                                     @elseif ($d->tempat == 'on')
@@ -160,7 +160,7 @@
                     <select class="form-control" name="tempat" id="tempat" onchange="othFunc()">
                         <option value="vip" selected>Ruang Rapat VIP I Inspektorat Jenderal - LT3</option>
                         <option value="ses">Ruang Rapat Sekretaris Inspektorat jenderal - LT4</option>
-                        <option value="bpk">Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat Jenderal - LT4</option>
+                        <option value="bpk">Ruang Rapat Badan Pemeriksa Keuangan (BPK) Inspektorat Jenderal - LT4</option>
                         <option value="on">Tanpa Ruangan (Rapat Via Online)</option>
                         <option value="oth">Ruangan Lain (isi sendiri)</option>
                     </select>
@@ -217,7 +217,7 @@
                     <select class="form-control" name="tempat" id="tempat" onchange="othFunc()">
                         <option value="vip" {{ $e->tempat == 'vip' ? 'selected' : '' }} >Ruang Rapat VIP I Inspektorat Jenderal - LT3</option>
                         <option value="ses" {{ $e->tempat == 'ses' ? 'selected' : '' }} >Ruang Rapat Sekretaris Inspektorat jenderal - LT4</option>
-                        <option value="bpk" {{ $e->tempat == 'bpk' ? 'selected' : '' }} >Ruang Rapat Badan Pengawas Keuangan (BPK) Inspektorat Jenderal - LT4</option>
+                        <option value="bpk" {{ $e->tempat == 'bpk' ? 'selected' : '' }} >Ruang Rapat Badan Pemeriksa Keuangan (BPK) Inspektorat Jenderal - LT4</option>
                         <option value="on" {{ $e->tempat == 'on' ? 'selected' : '' }} >Tanpa Ruangan (Rapat Via Online)</option>
                         <option value="oth" {{ $e->tempat == 'oth' ? 'selected' : '' }} >Ruangan Lain (isi sendiri)</option>
                     </select>
