@@ -144,6 +144,12 @@
                     <label>Nama Pemohon (Beserta Posisi Jabatan)</label>
                     <input required type="text" class="form-control" name="dari" placeholder="Adam Lewis (Staff Inspektur I)">
                     <br>
+                    <label>Asal UKE1 & UKE2</label>
+                    <input required type="text" class="form-control" name="uke">
+                    <br>
+                    <label>No. Telepon (Whatsapp)</label>
+                    <input required type="text" class="form-control" name="hp">
+                    <br>
                     <label>Nama Agenda/Rapat</label>
                     <input required type="text" class="form-control" name="nama">
                     <input required type="hidden" class="form-control" name="status" value="diajukan">
@@ -209,6 +215,12 @@
                     <input type="hidden" class="form-control" value="PUT" name="_method">
                     <input type="hidden" class="form-control" value="{{ csrf_token() }}" name="_token">
                     <input type="text" class="form-control" value="{{ $e->dari }}" name="dari">
+                    <br>
+                    <label>Asal UKE1 & UKE2</label>
+                    <input type="text" class="form-control" name="uke" value="{{ $e->uke }}">
+                    <br>
+                    <label>No. Telepon (Whatsapp)</label>
+                    <input type="text" class="form-control" name="hp" value="{{ $e->hp }}">
                     <br>
                     <label>Nama Agenda/Rapat</label>
                     <input type="text" class="form-control" name="nama" value="{{ $e->nama }}">
