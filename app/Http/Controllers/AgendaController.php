@@ -17,7 +17,7 @@ class AgendaController extends Controller
 
     public function index()
     {
-        $data['agenda'] = Agenda::orderBy('id', 'DESC')->get();
+        $data['agenda'] = Agenda::whereYear('created_at', 2022)->orderBy('id', 'DESC')->get();
         return view('pages.agenda', $data);
     }
 
@@ -46,8 +46,10 @@ class AgendaController extends Controller
             'dari'=> $request->dari,
             'keterangan' => $request->keterangan,
             'status' => $request->status,
-            'sampai' => $request->tgl . ' ' . $request->sampai
-                ];
+            'sampai' => $request->tgl . ' ' . $request->sampai,
+            'uke' => $request->uke,
+            'hp' => $request->hp
+        ];
         $save = Agenda::create($data);
         if ($save) {
             return redirect()->back();
@@ -99,7 +101,9 @@ class AgendaController extends Controller
             'dari'=> $request->dari,
             'keterangan' => $request->keterangan,
             'status' => $request->status,
-            'sampai' => $request->tgl . ' ' . $request->sampai
+            'sampai' => $request->tgl . ' ' . $request->sampai,
+            'uke' => $request->uke,
+            'hp' => $request->hp
         ];
         $save = Agenda::where('id', $agenda)->update($data);
         if ($save) {
@@ -121,7 +125,7 @@ class AgendaController extends Controller
     }
 
     public function adminjadwal(){
-        $data['agenda'] = Agenda::get();
+        $data['agenda'] = Agenda::whereYear('created_at', 2022)->get();
         return view('pages.adminjadwal', $data);
     }
 
@@ -131,7 +135,7 @@ class AgendaController extends Controller
         //                         ->orWhereDate('waktu', Carbon::tomorrow())
         //                         ->get();
         // $data['agenda'] = Agenda::where('waktu', '>=', Carbon::now())->get();
-        $data['agenda'] = Agenda::get();
+        $data['agenda'] = Agenda::whereYear('created_at', 2022)->getget();
 
         // return $data['agenda'];
         return view('jadwal', $data);
