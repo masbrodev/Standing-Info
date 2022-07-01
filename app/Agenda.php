@@ -13,6 +13,8 @@ class Agenda extends Model
         'keterangan', // off/on/ofn
         'tempat',
         'waktu',
-        'sampai'
+        'sampai',
+        'uke',
+        'hp'
     ];
 }

@@ -80,13 +80,13 @@
                                     <div class="">
                                         <br>
                                         @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span hidden>A</span> <span class="badge badge-danger">Hari Ini</span>
+                                        <span hidden>D</span> <span class="badge badge-danger">Hari Ini</span>
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span hidden>B</span> <span class="badge badge-primary">Besok</span>
+                                        <span hidden>C</span> <span class="badge badge-primary">Besok</span>
                                         @elseif (Carbon\Carbon::today()->isoFormat('YMMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span hidden>D</span> <span class="badge badge-secondary">Selesai</span>
+                                        <span hidden>A</span> <span class="badge badge-secondary">Selesai</span>
                                         @else
-                                        <span hidden>C</span> <span class="badge badge-warning">Akan Datang</span>
+                                        <span hidden>B</span> <span class="badge badge-warning">Akan Datang</span>
                                         @endif
                                         <br>
                                         <span class="badge badge-success">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
@@ -300,18 +300,12 @@
     };
         $(document).ready(function() {
             $("#agenda").dataTable({
+                "order": [[0, 'desc']],
                 "bLengthChange": false,
                 "bFilter": true,
                 "bInfo": false,
                 "bAutoWidth": false
             });
-
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
-
-            // console.log(d);
 
 
             /*  className colors
@@ -324,26 +318,6 @@
             /* initialize the external events
             -----------------------------------------------------------------*/
 
-            $('#external-events div.external-event').each(function() {
-
-                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-                // it doesn't need to have a start or end
-                var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
-                };
-
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject);
-
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 999,
-                    revert: true, // will cause the event to go back to its
-                    revertDuration: 0 //  original position after the drag
-                });
-
-            });
-
 
             /* initialize the calendar
             -----------------------------------------------------------------*/
@@ -353,14 +327,14 @@
                     left: 'title',
                     right: 'prev,next'
                 },
-                editable: true,
+                editable: false,
                 firstDay: 0, //  1(Monday) this can be changed to 0(Sunday) for the USA system
-                selectable: true,
+                selectable: false,
                 defaultView: 'month',
 
                 axisFormat: 'h:mm',
                 columnFormat: {
-                    month: 'ddd', // Mon
+                    month: 'dddd', // Mon
                     week: 'ddd d', // Mon 7
                     day: 'dddd M/d', // Monday 9/7
                     agendaDay: 'dddd d'
@@ -374,34 +348,12 @@
                 selectHelper: true,
 
                 droppable: true, // this allows things to be dropped onto the calendar !!!
-                drop: function(date, allDay) { // this function is called when something is dropped
 
-                    // retrieve the dropped element's stored Event Object
-                    var originalEventObject = $(this).data('eventObject');
-
-                    // we need to copy it, so that multiple events don't have a reference to the same object
-                    var copiedEventObject = $.extend({}, originalEventObject);
-
-                    // assign it the date that was reported
-                    copiedEventObject.start = date;
-                    copiedEventObject.allDay = allDay;
-
-                    // render the event on the calendar
-                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
-
-                },
 
                 events: [
                     @foreach ($agenda as $j)
                         {
-                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:MM') }} {{ $j->status == 'diajukan' ? '✗' : '✔' }}
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:mm') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:mm') }} {{ $j->status == 'diajukan' ? '✗' : '✔' }}
                                     @if ($j->tempat == 'vip')
                                     vip1 LT 3
                                     @elseif ($j->tempat == 'bpk')

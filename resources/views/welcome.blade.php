@@ -120,13 +120,13 @@
                                 <div class="">
                                         <br>
                                         @if( Carbon\Carbon::now()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span hidden>A</span> <span class="badge badge-danger">Hari Ini</span>
+                                        <span hidden>D</span> <span class="badge badge-danger">Hari Ini</span>
                                         @elseif (Carbon\Carbon::tomorrow()->isoFormat('YMMDD') == Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span hidden>B</span> <span class="badge badge-primary">Besok</span>
+                                        <span hidden>C</span> <span class="badge badge-primary">Besok</span>
                                         @elseif (Carbon\Carbon::today()->isoFormat('YMMDD') > Carbon\Carbon::parse($d->waktu)->isoFormat('YMMDD'))
-                                        <span hidden>D</span> <span class="badge badge-secondary">Selesai</span>
+                                        <span hidden>A</span> <span class="badge badge-secondary">Selesai</span>
                                         @else
-                                        <span hidden>C</span> <span class="badge badge-warning">Akan Datang</span>
+                                        <span hidden>B</span> <span class="badge badge-warning">Akan Datang</span>
                                         @endif
                                         <br>
                                         <span class="badge badge-success">{{ Carbon\Carbon::parse($d->waktu)->isoFormat('H:mm') }} WIB</span>
@@ -185,6 +185,12 @@
                     <input disabled type="hidden" class="form-control" value="PUT" name="_method">
                     <input disabled type="hidden" class="form-control" value="{{ csrf_token() }}" name="_token">
                     <input disabled type="text" class="form-control" value="{{ $e->dari }}" name="dari">
+                    <br>
+                    <label>Asal UKE1 & UKE2</label>
+                    <input disabled type="text" class="form-control" name="uke" value="{{ $e->uke }}">
+                    <br>
+                    <label>No. Telepon (Whatsapp)</label>
+                    <input disabled type="text" class="form-control" name="hp" value="{{ $e->hp }}">
                     <br>
                     <!-- <label>Nama Agenda/Rapat</label>
                     <input disabled type="text" class="form-control" name="nama" value="{{ $e->nama }}">
@@ -267,7 +273,7 @@
     <script>
         $(document).ready(function() {
             $("#agenda").dataTable({
-                "order": [[3, 'asc']],
+                "order": [[3, 'desc']],
                 "bLengthChange": false,
                 "bFilter": true,
                 "bInfo": false,
@@ -327,7 +333,7 @@
 
             axisFormat: 'h:mm',
             columnFormat: {
-                month: 'ddd', // Mon
+                month: 'dddd', // Mon
                 week: 'ddd d', // Mon 7
                 day: 'dddd M/d', // Monday 9/7
                 agendaDay: 'dddd d'
@@ -368,7 +374,7 @@
             events: [
                 @foreach ($agenda as $j)
                     {
-                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:MM') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:MM') }}{{ $j->status == 'diajukan' ? '✗' : '✔' }}
+                            title : `{{ Carbon\Carbon::parse($j->waktu)->isoFormat('HH:mm') .'-'. Carbon\Carbon::parse($j->sampai)->isoFormat('HH:mm') }}{{ $j->status == 'diajukan' ? '✗' : '✔' }}
                                 @if ($j->tempat == 'vip')
                                 vip1 LT 3
                                 @elseif ($j->tempat == 'bpk')
