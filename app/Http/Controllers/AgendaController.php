@@ -135,7 +135,7 @@ class AgendaController extends Controller
         //                         ->orWhereDate('waktu', Carbon::tomorrow())
         //                         ->get();
         // $data['agenda'] = Agenda::where('waktu', '>=', Carbon::now())->get();
-        $data['agenda'] = Agenda::whereYear('created_at', 2022)->getget();
+        $data['agenda'] = Agenda::whereYear('created_at', 2022)->get();
 
         // return $data['agenda'];
         return view('jadwal', $data);
