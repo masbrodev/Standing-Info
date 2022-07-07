@@ -140,7 +140,7 @@
             <div class="modal-body">
                 <form action="{{ route('agenda.store')}}" method="post">
                     @csrf
-                    <label>Nama Pemohon (Beserta Posisi Jabatan)</label>
+                    <label>Nama Pemohon</label>
                     <input required type="text" class="form-control" name="dari" placeholder="Nama Lengkap">
                     <br>
                     <label>Asal UKE1 & UKE2</label>
@@ -210,7 +210,7 @@
             <div class="modal-body">
                 <form action="{{ route('agenda.update',$e->id) }}" method="POST">
                     @csrf
-                    <label>Nama Pemohon (Beserta Posisi Jabatan)</label>
+                    <label>Nama Pemohon</label>
                     <input disabled type="hidden" class="form-control" value="PUT" name="_method">
                     <input disabled type="hidden" class="form-control" value="{{ csrf_token() }}" name="_token">
                     <input disabled type="text" class="form-control" value="{{ $e->dari }}" name="dari">

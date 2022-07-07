@@ -19,11 +19,11 @@
 </head>
 
 <body>
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-md-12">
             <iframe width="1055" height="315" src="https://www.youtube.com/embed/{{Str::of($vidio->link)->afterLast('?v=')}}?rel=0&amp;autoplay=1&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
-    </div> -->
+    </div>
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @foreach($gambar as $g)
